@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import userRouter from './src/routers/user'
 import storageRouter from './src/routers/storage'
+import supplierRouter from './src/routers/supplier'
+
 import cors from 'cors'
 import { verifyToken } from './src/middlewares/verifyToken.';
 dotenv.config()
@@ -18,6 +20,8 @@ app.use('/auth', userRouter)
 
 app.use(verifyToken)
 app.use('/store', storageRouter)
+app.use('/supplier', supplierRouter)
+
 
 
 const connectDB = async () => {
