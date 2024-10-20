@@ -1,10 +1,12 @@
 import SupplierModel from "../models/SupplierModel"
 
-const getProducts = async (req: any, res: any) => {
+const getSuppliers = async (_req: any, res: any) => {
   try {
+    const items = await SupplierModel.find({ isDeleted: false })
+
     res.status(200).json({
-      message: 'Get products successfully',
-      data: []
+      message: 'Get suppliers successfully',
+      data: items
     })
   } catch (error: any) {
     res.status(404).json({
@@ -30,4 +32,39 @@ const addSupplier = async (req: any, res: any) => {
   }
 }
 
-export { addSupplier }
+const updateSupplier = async (req: any, res: any) => {
+  const body = req.body
+  const { id } = req.query
+
+  try {
+    await SupplierModel.findByIdAndUpdate(id, body)
+
+    res.status(200).json({
+      message: 'Update supplier successfully',
+      data: []
+    })
+  } catch (error: any) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+}
+
+const deleteSupplier = async (req: any, res: any) => {
+  const { id } = req.query
+
+  try {
+    await SupplierModel.findByIdAndDelete(id)
+
+    res.status(200).json({
+      message: 'Delete supplier successfully',
+      data: []
+    })
+  } catch (error: any) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+}
+
+export { getSuppliers, addSupplier, updateSupplier, deleteSupplier }
